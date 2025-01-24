@@ -5,6 +5,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '../app/services/api';
+import '../app/globals.css';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -20,26 +21,24 @@ export default function Login() {
     }
 
     try {
-      const response = await api.post('/user/login', { username, password });
+      const response = await api.post('/login', { username, password });
 
       if (response.status === 200) {
         localStorage.setItem('userId', response.data.userId);
-        alert('Login successful!');
-        router.push('/shopping-list');  // Redirect to shopping list page
-      } else {
-        alert('Invalid username or password.');
+        alert(response.data.message);
+        router.push('/shopping-list');
       }
     } catch (error: any) {
       console.error('Login failed:', error);
-      alert(`Login failed. ${error.response?.data || 'Please try again.'}`);
+      alert(`Login failed: ${error.response?.data || 'Please try again.'}`);
     }
   };
 
   return (
     <div className="container">
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
+      <div className="form-wrapper">
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
           <input
             type="text"
             placeholder="Enter username"
@@ -47,8 +46,6 @@ export default function Login() {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </div>
-        <div>
           <input
             type="password"
             placeholder="Enter password"
@@ -56,10 +53,12 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>Don not have an account? <a href="/signup">Sign up here</a></p>
+          <button type="submit">Login</button>
+        </form>
+        <p>
+          Don not have an account? <a href="/signup" className="link">Sign up here</a>
+        </p>
+      </div>
     </div>
   );
 }

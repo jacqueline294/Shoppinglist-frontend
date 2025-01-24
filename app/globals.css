@@ -1,7 +1,9 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Root variables for light and dark themes */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -14,19 +16,16 @@
   }
 }
 
+/* General body styles */
 body {
+  font-family: Arial, Helvetica, sans-serif;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-/* globals.css */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
 }
 
+/* Form styling */
 .container {
   display: flex;
   justify-content: center;
@@ -43,12 +42,7 @@ body {
   text-align: center;
 }
 
-.form-wrapper h1 {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-}
-
+/* Ensure input text visibility */
 .form-wrapper input {
   width: 100%;
   padding: 12px;
@@ -57,6 +51,15 @@ body {
   border-radius: 5px;
   outline: none;
   margin-bottom: 15px;
+  color: #333; /* Ensure text is visible */
+  background-color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-wrapper input {
+    color: #fff;
+    background-color: #333;
+  }
 }
 
 .form-wrapper button {
@@ -84,5 +87,3 @@ body {
 .link:hover {
   text-decoration: underline;
 }
-
-

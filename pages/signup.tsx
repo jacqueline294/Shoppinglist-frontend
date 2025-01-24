@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '../app/services/api';
-import axios from 'axios';
+import '../app/globals.css';
 
 export default function Signup() {
   const [username, setUsername] = useState('');
@@ -14,27 +15,17 @@ export default function Signup() {
     e.preventDefault();
 
     if (!username || !password) {
-      alert("Please fill in all fields.");
+      alert('Please fill in all fields.');
       return;
     }
 
     try {
-      const response = await api.post('/user', { username, password });
-      
-      if (response.status === 201) {
-        alert('Signup successful! Please log in.');
-        router.push('/login');
-      } else {
-        alert('Unexpected response from server.');
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-
-      if (axios.isAxiosError(error)) {
-        alert(`Signup failed. ${error.response?.data || 'Please try again.'}`);
-      } else {
-        alert('Signup failed. Unexpected error occurred.');
-      }
+      await api.post('', { username, password });  // Ensure the correct endpoint
+      alert('Signup successful! Please log in.');
+      router.push('/login');
+    } catch (error: any) {
+      alert(`Signup failed: ${error.response?.data || 'Please try again.'}`);
+      console.error(error);
     }
   };
 
@@ -60,7 +51,7 @@ export default function Signup() {
           <button type="submit">Sign Up</button>
         </form>
         <p>
-          Already have an account? <a href="/login" className="link">Login here</a>
+          Already have an account? <a href="/login" className="link">Log in here</a>
         </p>
       </div>
     </div>
