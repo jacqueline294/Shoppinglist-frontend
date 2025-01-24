@@ -79,10 +79,11 @@ export default function ShoppingList() {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+    <div className="container">
+    <div className="shopping-wrapper">
       <h1>Your Shopping List</h1>
       
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+      <form onSubmit={handleSubmit} className="form">
         <input
           type="text"
           placeholder="Enter item"
@@ -100,13 +101,13 @@ export default function ShoppingList() {
         <button type="submit">{editingItem ? 'Update Item' : 'Add Item'}</button>
       </form>
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="shopping-list">
         {items.length > 0 ? (
           items.map((item) => (
-            <li key={item.id} style={{ marginBottom: '10px' }}>
+            <li key={item.id} className="list-item">
               {item.itemName} - {item.quantity}
-              <button onClick={() => handleEdit(item)} style={{ marginLeft: '10px' }}>Edit</button>
-              <button onClick={() => handleDelete(item.id)} style={{ marginLeft: '10px' }}>Delete</button>
+              <button onClick={() => handleEdit(item)} className="btn-edit">Edit</button>
+              <button onClick={() => handleDelete(item.id)} className="btn-delete">Delete</button>
             </li>
           ))
         ) : (
@@ -114,9 +115,10 @@ export default function ShoppingList() {
         )}
       </ul>
 
-      <button onClick={handleLogout} style={{ padding: '10px 20px', marginTop: '20px' }}>
+      <button onClick={handleLogout} className="btn-logout">
         Logout
       </button>
     </div>
-  );
+  </div>
+);
 }

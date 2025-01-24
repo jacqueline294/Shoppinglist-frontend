@@ -5,7 +5,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '../app/services/api';
-import '../app/globals.css';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -21,16 +20,18 @@ export default function Login() {
     }
 
     try {
-      const response = await api.post('/login', { username, password });
+      const response = await api.post('/user/login', { username, password });
 
-      if (response.status === 200) {
+      if (response.data.userId) {
         localStorage.setItem('userId', response.data.userId);
-        alert(response.data.message);
+        alert('Login successful!');
         router.push('/shopping-list');
+      } else {
+        alert('Invalid username or password.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Login failed:', error);
-      alert(`Login failed: ${error.response?.data || 'Please try again.'}`);
+      alert(`Login failed. 'Please try again.'}`);
     }
   };
 
@@ -38,7 +39,7 @@ export default function Login() {
     <div className="container">
       <div className="form-wrapper">
         <h1>Login</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="form">
           <input
             type="text"
             placeholder="Enter username"
